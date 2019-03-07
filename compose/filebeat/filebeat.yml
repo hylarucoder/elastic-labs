@@ -1,17 +1,52 @@
----
+######################## Filebeat Configuration ############################
 
-filebeat.config:
-  modules:
-    path: ${path.config}/modules.d/*.yml
-    reload.enabled: false
+# This file is a full configuration example documenting all non-deprecated
+# options in comments. For a shorter configuration example, that contains only
+# the most common options, please see filebeat.yml in the same directory.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
 
-filebeat.autodiscover:
-  providers:
-    - type: docker
-      hints.enabled: true
+#==========================  Modules configuration ============================
 
-processors:
-- add_cloud_metadata: ~
+filebeat.modules:
 
-output.elasticsearch:
-  hosts: 'elasticsearch:9200'
+#------------------------------- Nginx Module -------------------------------
+- module: nginx
+  access:
+    enabled: true
+    var.paths: ["/var/log/prod/nginx/access.log*"]
+  error:
+    enabled: true
+    var.paths: ["/var/log/prod/nginx/error.log*"]
+
+#=========================== Filebeat inputs =============================
+
+# filebeat.inputs:
+# #------------------------------ Log input --------------------------------
+# - type: log
+#   # Change to true to enable this input configuration.
+#   enabled: true
+#   encoding: "utf-8"
+#   paths:
+#   - /var/log/*.log
+
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+setup.kibana:
+  host: "kibana:5601"
+
+
+#filebeat.config:
+  #inputs:
+    #enabled: false
+    #path: inputs.d/*.yml
+    #reload.enabled: true
+    #reload.period: 10s
+  #modules:
+    #enabled: false
+    #path: modules.d/*.yml
+    #reload.enabled: true
+    #reload.period: 10s
