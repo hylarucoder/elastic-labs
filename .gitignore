@@ -1,2 +1,4 @@
 logs
 .DS_Store
+__pycache__/
+.ropeproject/
