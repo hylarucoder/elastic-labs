@@ -8,6 +8,9 @@ authors = ["twocucao <twocucao@gmail.com>"]
 python = "^3.7"
 flask = "*"
 elastic-apm = "^4.1"
+blinker = "^1.4"
+python-dotenv = "^0.10.1"
+psutil = "^5.6"
 
 [tool.poetry.dev-dependencies]
 
